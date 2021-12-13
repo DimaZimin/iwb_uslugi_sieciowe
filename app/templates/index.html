@@ -1,9 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}IWB Project{% endblock %}
+{% block title %}DDPM TEAM{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
     <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
 </div>
+{% if not current_user.is_authenticated %}
+<div>
+    <p>To use this service please <a href="{{ url_for('auth.login') }}">login</a> or <a href="{{ url_for('auth.register') }}">register</a>
+</div>
+{% endif%}
+{% if not current_user.is_anonymous %}
+<div class="row">
+    <div class="col-md-6">
+        <p><b>List of users:</b></p>
+    </div>
+</div>
+<hr>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+
+                <td>
+                    <form method="post" action="{{ url_for('main.remove_user', user_id=user.id) }}">
+                        <p><input type="submit" value="remove"/></p>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
 {% endblock %}
