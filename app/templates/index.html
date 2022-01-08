@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}DDPM TEAM{% endblock %}
+{% block title %}DDMŁR TEAM{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
@@ -14,7 +14,40 @@
 {% if not current_user.is_anonymous %}
 <div class="row">
     <div class="col-md-6">
+        <p><b>This project was created by:</b></p>
+        <ul class="list-group">
+            <li class="list-group-item">
+                Dmytro Zimin
+            </li>
+            <li class="list-group-item">
+                Damian Kujawa
+            </li>
+            <li class="list-group-item">
+                Mieszko Narkiewicz
+            </li>
+            <li class="list-group-item">
+                Robert Kośkiewicz
+            </li>
+            <li class="list-group-item">
+                Łukasz Karulek
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <p><b>AI tools:</b></p>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="http://193.56.240.110:8501/">Stock price forecast</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
         <p><b>List of users:</b></p>
+    </div>
+    <div class="col-md-6">
+        <p><a href="{{ url_for('main.add_user') }}"><button>Add user</button></a></p>
     </div>
 </div>
 <hr>

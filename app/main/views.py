@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user
 from . import main
+from .forms import AddUserForm
 from .. import db
 from ..models import User
 
@@ -12,6 +13,20 @@ def index():
     elif current_user.is_authenticated:
         users = User.query.all()
         return render_template('index.html', users=users, current_user=current_user)
+
+
+@main.route('/users/add/', methods=['GET', 'POST'])
+def add_user():
+    form = AddUserForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data.lower(),
+                    username=form.username.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'User {user.username} has been added.')
+        return redirect(url_for('main.index'))
+    return render_template('add_user.html', form=form)
 
 
 @main.route('/users/remove/<user_id>', methods=['POST'])
@@ -29,3 +44,4 @@ def remove_user(user_id):
     else:
         flash(f"Method not allowed")
         return redirect(url_for('main.index'))
+
